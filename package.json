@@ -1,0 +1,98 @@
+{
+  "name": "vscode-filedetails",
+  "displayName": "File Details",
+  "description": "Finder-style 'Get Info' details for the selected file, in a Details panel alongside Timeline and Outline.",
+  "version": "0.2.0",
+  "publisher": "knowlesy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/knowlesy/vscode-filedetails"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "fileDetails.view",
+          "name": "Details"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "fileDetails.show",
+        "title": "Show Details",
+        "category": "File Details"
+      },
+      {
+        "command": "fileDetails.compare",
+        "title": "Compare Details",
+        "category": "File Details"
+      },
+      {
+        "command": "fileDetails.refresh",
+        "title": "Refresh",
+        "category": "File Details",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "fileDetails.show",
+          "when": "!listMultiSelection",
+          "group": "4_timeline@10"
+        },
+        {
+          "command": "fileDetails.compare",
+          "group": "3_compare@30"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "fileDetails.show"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "fileDetails.refresh",
+          "when": "view == fileDetails.view",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "File Details",
+      "properties": {
+        "fileDetails.followActiveEditor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Update the Details panel when the active editor tab changes (e.g. clicking a file in the Explorer)."
+        },
+        "fileDetails.lineCountMaxBytes": {
+          "type": "number",
+          "default": 5000000,
+          "description": "Only count lines for text files up to this size (bytes)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --skip-license"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.4.0"
+  }
+}
